@@ -1,0 +1,11 @@
+musl chartable-tools
+====================
+
+This repository contains (slightly cleaned up versions of) the source
+files used to generate musl libc's iconv and ctype/wcwidth tables. The
+code is still highly unpolished and unsafe to run on untrusted data.
+
+Both sets of tools (iconv and ctype) include makefiles that build and
+run them to produce the tables. The initial check-in has been checked
+to match the table contents (but not the exact formatting) present in
+musl 1.1.18.

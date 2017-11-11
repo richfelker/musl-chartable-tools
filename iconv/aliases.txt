@@ -1,0 +1,28 @@
+iso-8859-1.txt iso88591 latin1
+iso-8859-2.txt iso88592
+iso-8859-3.txt iso88593
+iso-8859-4.txt iso88594
+iso-8859-5.txt iso88595
+iso-8859-6.txt iso88596
+iso-8859-7.txt iso88597
+iso-8859-8.txt iso88598
+iso-8859-9.txt iso88599
+iso-8859-10.txt iso885910
+iso-8859-11.txt iso885911 tis620
+iso-8859-13.txt iso885913
+iso-8859-14.txt iso885914
+iso-8859-15.txt iso885915 latin9
+iso-8859-16.txt iso885916
+cp1250.txt cp1250 windows1250
+cp1251.txt cp1251 windows1251
+cp1252.txt cp1252 windows1252
+cp1253.txt cp1253 windows1253
+cp1254.txt cp1254 windows1254
+cp1255.txt cp1255 windows1255
+cp1256.txt cp1256 windows1256
+cp1257.txt cp1257 windows1257
+cp1258.txt cp1258 windows1258
+koi8-r.txt koi8r
+koi8-u.txt koi8u
+cp437.txt cp437
+cp850.txt cp850
