@@ -11,7 +11,7 @@ clean:
 
 legacychars.h: arrayify $(CHARMAPS)
 	cat $(CHARMAPS) \
-	| grep -v '^0x\(..\)	0x00\1' | grep ^0x[89ABCDEF] \
+	| grep -v '^0x..	0x00..' | grep ^0x[0123456789ABCDEFabcdef] \
 	| cut -d'	' -f2  | tr a-z A-Z | sort -u \
 	| ./arrayify > $@
 
