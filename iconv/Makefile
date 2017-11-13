@@ -12,7 +12,7 @@ clean:
 legacychars.h: arrayify $(CHARMAPS)
 	cat $(CHARMAPS) \
 	| grep -v '^0x\(..\)	0x00\1' | grep ^0x[89ABCDEF] \
-	| cut -d'	' -f2  | sort -u \
+	| cut -d'	' -f2  | tr a-z A-Z | sort -u \
 	| ./arrayify > $@
 
 mkcodepage: mkcodepage.c legacychars.h
