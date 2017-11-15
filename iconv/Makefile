@@ -2,7 +2,7 @@
 CFLAGS = -O2
 CHARMAPS = $(wildcard charmaps/*)
 
-ALL = legacychars.h codepages.h jis0208.h gb18030.h hkscs.h ksc.h
+ALL = legacychars.h codepages.h jis0208.h gb18030.h hkscs.h ksc.h revjis.h
 
 all: $(ALL)
 
@@ -32,3 +32,8 @@ ksc.h: ks cjk/CP949.TXT
 
 hkscs.h: hkscs cjk/hkscs-2008-sect3-musl.txt
 	./hkscs < cjk/hkscs-2008-sect3-musl.txt | ./arrayify > $@
+
+revjis.h: arrayify cjk/jis0208.txt
+	grep ^0x cjk/jis0208.txt | sort -k3 \
+	| while read a b c ; do echo $$((b-0x2121)) ; done \
+	| ./arrayify > $@
