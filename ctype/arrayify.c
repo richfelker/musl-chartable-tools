@@ -8,7 +8,7 @@ int main(int argc, char **argv)
 	FILE *f = stdout;
 	while (scanf("%i", &x)==1) {
 		len = sprintf(buf, "%u,", x);
-		if ((++cnt%256||1) && col < 79-len) {
+		if (++cnt%256 && col < 79-len) {
 			col += len;
 			fputs(buf, f);
 		} else {
