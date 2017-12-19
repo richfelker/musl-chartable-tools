@@ -26,4 +26,5 @@ koi8-r.txt koi8r
 koi8-u.txt koi8u
 cp437.txt cp437
 cp850.txt cp850
+cp866.txt cp866
 ibm1047.txt ibm1047 cp1047
