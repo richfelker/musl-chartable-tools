@@ -1,7 +1,7 @@
 
 CFLAGS = -O2
 
-ALL = alpha.h punct.h nonspacing.h wide.h
+ALL = alpha.h punct.h nonspacing.h wide.h casemap.h
 
 all: $(ALL)
 
@@ -19,3 +19,6 @@ nonspacing.h: data/UnicodeData.txt gen_nonspacing arrayify
 
 wide.h: data/EastAsianWidth.txt gen_wide arrayify
 	./gen_wide | ./arrayify > $@
+
+casemap.h: data/UnicodeData.txt gen_casemap
+	./gen_casemap < $< > $@
