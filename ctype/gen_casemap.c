@@ -103,7 +103,7 @@ int main(int argc, char **argv)
 	int exceptions[1024][2] = {0};
 	int xcnt = 0;
 	unsigned char *tab = calloc(512+7,86);
-	int tabpos = 7; // ceil(512/86) + 1
+	size_t tabpos = 7; // ceil(512/86) + 1
 
 	setlocale(LC_CTYPE, "");
 
