@@ -19,6 +19,9 @@ int main()
 	fclose(f);
 
 	set[0xad]=0;
+	// hangul vowel/trailing
+	for (a=0x1160; a<=0x11ff; a++) set[a]=1;
+	for (a=0xd7b0; a<=0xd7ff; a++) set[a]=1;
 
 #define STEP 0x100
 	int blocks_needed=0;
