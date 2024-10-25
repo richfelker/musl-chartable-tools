@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-int main()
+int main(int argc, char **argv)
 {
 	char *set = calloc(0x110000,1);
 	char table1[0x300];
@@ -9,7 +10,15 @@ int main()
 	int a, b;
 	FILE *f;
 
-	f = fopen("data/UnicodeData.txt", "rb");
+	if (argc<2) return 1;
+
+	char *base_data_path = "/UnicodeData.txt";
+	char *path = calloc(strlen(argv[1]) + 128,1);
+	strcpy(path, argv[1]);
+	strcat(path, base_data_path);
+
+	f = fopen(path, "rb");
+	if (!f) return 1;
 	while (fgets(buf, sizeof buf, f)) {
 		if (sscanf(buf, "%x;%*[^;];M%*[en]%c", &a, &dummy)==2)
 			set[a] = 1;
@@ -42,5 +51,5 @@ int main()
 		}
 	}
 
-
+	return 0;
 }

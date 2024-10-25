@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main(int argc, char **argv)
 {
@@ -10,12 +11,18 @@ int main(int argc, char **argv)
 	FILE *f;
 	int wanted_set;
 
-	if (argc<2) return 1;
+	if (argc<3) return 1;
 	if (argv[1][0]=='a') wanted_set = 1;
 	else if (argv[1][0]=='p') wanted_set = 2;
 	else return 1;
 
-	f = fopen("data/UnicodeData.txt", "rb");
+	char *base_data_path = "/UnicodeData.txt";
+	char *path = calloc(strlen(argv[2]) + 128, 1);
+	strcpy(path, argv[2]);
+	strcat(path, base_data_path);
+
+	f = fopen(path, "rb");
+	if (!f) return 1;
 	while (fgets(buf, sizeof buf, f)) {
 		if (sscanf(buf, "%x;%*[^;];Nd%c", &a, &dummy)==2)
 			set[a] = 1;
@@ -24,7 +31,12 @@ int main(int argc, char **argv)
 	}
 	fclose(f);
 
-	f = fopen("data/DerivedCoreProperties.txt", "rb");
+	char *base_coreprop_path = "/DerivedCoreProperties.txt";
+	strcpy(path, argv[2]);
+	strcat(path, base_coreprop_path);
+
+	f = fopen(path, "rb");
+	if (!f) return 1;
 	while (fgets(buf, sizeof buf, f)) {
 		if (sscanf(buf, "%x..%x ; Alphabetic%c", &a, &b, &dummy)==3)
 			for (; a<=b; a++) set[a]=1;
@@ -81,4 +93,5 @@ int main(int argc, char **argv)
 			if (!(b+1&7)) printf("%d\n", x&255);
 		}
 	}
+	return 0;
 }

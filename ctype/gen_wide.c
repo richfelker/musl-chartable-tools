@@ -1,20 +1,72 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-int main()
+int parse_rng(char *buf, int *a, int *b, char *v) {
+	char *ebuf = buf;
+	int ta = 0, tb = 0;
+	char tv = 0;
+
+	tb = ta = strtol(buf, &ebuf, 16);
+	if (ebuf == buf) return 0;
+	buf = ebuf;
+	if (*buf == '.') {
+		++buf;
+		if (*buf++ != '.') return 0;
+		tb = strtol(buf, &ebuf, 16);
+		if (ebuf == buf) return 0;
+		buf = ebuf;
+	}
+	while (*buf == ' ' || *buf == '\t') { ++buf; }
+	if (*buf != ';') return 0;
+	++buf;
+	while (*buf == ' ' || *buf == '\t') { ++buf; }
+	switch (tv = *buf++) {
+	case 'A': case 'F': case 'H': case 'W': break;
+	case 'N':
+		if (*buf == 'a') {
+			tv = 'q';
+			++buf;
+		}
+		break;
+	default: return 0;
+	}
+	if (!(*buf == ' ' || *buf == '\t' || *buf == '\n' || *buf == 0))
+		return 0;
+
+	*a = ta, *b = tb, *v = tv;
+	return 1;
+}
+
+int main(int argc, char **argv)
 {
 	char *set = calloc(0x110000,1);
 	char table1[0x300];
-	char buf[128], dummy;
-	int a, b;
+	char buf[256], dummy;
+	int a = 0, b = 0;
+	char wprop = '_';
 	FILE *f;
 
-	f = fopen("data/EastAsianWidth.txt", "rb");
+	if (argc<2) return 1;
+
+	char *base_data_path = "/EastAsianWidth.txt";
+	char *path = calloc(strlen(argv[1]) + 128, 1);
+	strcpy(path, argv[1]);
+	strcat(path, base_data_path);
+
+	f = fopen(path, "rb");
+	if (!f) return 1;
 	while (fgets(buf, sizeof buf, f)) {
-		if (sscanf(buf, "%x..%x;%*[WF]%c", &a, &b, &dummy)==3)
-			for (; a<=b; a++) set[a]=1;
-		else if (sscanf(buf, "%x;%*[WF]%c", &a, &dummy)==2)
-			set[a] = 1;
+		if (parse_rng(buf, &a, &b, &wprop)) {
+			if (wprop == 'W' || wprop == 'F') {
+				for (; a<=b; a++) set[a]=1;
+			}
+		} else if (buf[0] == '\n') {}
+		else if (buf[0] == '#') {}
+		else {
+			fprintf(stderr, "Fail: [%s]", buf);
+			return 1;
+		}
 	}
 	fclose(f);
 
@@ -38,4 +90,5 @@ int main()
 			if (!(b+1&7)) printf("%d\n", x&255);
 		}
 	}
+	return 0;
 }

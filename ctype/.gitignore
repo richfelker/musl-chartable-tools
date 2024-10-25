@@ -1,0 +1,12 @@
+.*
+alpha.h
+arrayify
+casemap.h
+gen_casemap
+gen_ctype
+gen_nonspacing
+gen_wide
+nonspacing.h
+punct.h
+wide.h
+!/.gitignore

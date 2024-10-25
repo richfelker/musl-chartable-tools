@@ -1,3 +1,4 @@
+DATA := data
 
 CFLAGS = -O2
 
@@ -8,17 +9,17 @@ all: $(ALL)
 clean:
 	rm -f $(ALL) arrayify gen_ctype gen_nonspacing gen_wide
 
-alpha.h: data/UnicodeData.txt data/DerivedCoreProperties.txt gen_ctype arrayify
-	./gen_ctype a | ./arrayify > $@
+alpha.h: $(DATA)/UnicodeData.txt $(DATA)/DerivedCoreProperties.txt gen_ctype arrayify
+	set -o pipefail; ./gen_ctype a $(DATA) | ./arrayify > $@
 
-punct.h: data/UnicodeData.txt data/DerivedCoreProperties.txt gen_ctype arrayify
-	./gen_ctype p | ./arrayify > $@
+punct.h: $(DATA)/UnicodeData.txt $(DATA)/DerivedCoreProperties.txt gen_ctype arrayify
+	set -o pipefail; ./gen_ctype p $(DATA) | ./arrayify > $@
 
-nonspacing.h: data/UnicodeData.txt gen_nonspacing arrayify
-	./gen_nonspacing | ./arrayify > $@
+nonspacing.h: $(DATA)/UnicodeData.txt gen_nonspacing arrayify
+	set -o pipefail; ./gen_nonspacing $(DATA) | ./arrayify > $@
 
-wide.h: data/EastAsianWidth.txt gen_wide arrayify
-	./gen_wide | ./arrayify > $@
+wide.h: $(DATA)/EastAsianWidth.txt gen_wide arrayify
+	set -o pipefail; ./gen_wide $(DATA) | ./arrayify > $@
 
-casemap.h: data/UnicodeData.txt gen_casemap
-	./gen_casemap < $< > $@
+casemap.h: $(DATA)/UnicodeData.txt gen_casemap
+	set -o pipefail; ./gen_casemap < $< > $@
