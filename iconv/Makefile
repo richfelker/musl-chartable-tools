@@ -2,7 +2,7 @@
 CFLAGS = -O2
 CHARMAPS = $(wildcard charmaps/*)
 
-ALL = legacychars.h codepages.h jis0208.h gb18030.h hkscs.h ksc.h revjis.h
+ALL = legacychars.h codepages.h jis0208.h gb18030.h gb18030utf.h hkscs.h ksc.h revjis.h
 
 all: $(ALL)
 
@@ -23,6 +23,9 @@ codepages.h: mkcodepage aliases.txt $(CHARMAPS)
 
 gb18030.h: gb cjk/gb18030.txt
 	./gb < cjk/gb18030.txt | ./arrayify > $@
+
+gb18030utf.h: gb_utf cjk/gb18030.txt
+	./gb_utf < cjk/gb18030.txt > $@
 
 jis0208.h: jis cjk/jis0208.txt
 	./jis < cjk/jis0208.txt | ./arrayify > $@
