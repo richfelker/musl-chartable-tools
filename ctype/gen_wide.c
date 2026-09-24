@@ -5,16 +5,26 @@ int main()
 {
 	char *set = calloc(0x110000,1);
 	char table1[0x300];
-	char buf[128], dummy;
+	char buf[500], dummy;
 	int a, b;
 	FILE *f;
 
 	f = fopen("data/EastAsianWidth.txt", "rb");
 	while (fgets(buf, sizeof buf, f)) {
-		if (sscanf(buf, "%x..%x ; %*[WF]%c", &a, &b, &dummy)==3)
+		if (sscanf(buf, "%x", &a)!=1)
+			continue;
+		else if (sscanf(buf, "%x..%x ; %*[WF]%c", &a, &b, &dummy)==3)
 			for (; a<=b; a++) set[a]=1;
 		else if (sscanf(buf, "%x ; %*[WF]%c", &a, &dummy)==2)
 			set[a] = 1;
+		else if (sscanf(buf, "%x..%x ; %*[AHN]%c", &a, &b, &dummy)==3)
+			;
+		else if (sscanf(buf, "%x ; %*[AHN]%c", &a, &dummy)==2)
+			;
+		else {
+			fprintf(stderr, "error parsing: %s", buf);
+			return 1;
+		}
 	}
 	fclose(f);
 
