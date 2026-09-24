@@ -11,9 +11,9 @@ int main()
 
 	f = fopen("data/EastAsianWidth.txt", "rb");
 	while (fgets(buf, sizeof buf, f)) {
-		if (sscanf(buf, "%x..%x;%*[WF]%c", &a, &b, &dummy)==3)
+		if (sscanf(buf, "%x..%x ; %*[WF]%c", &a, &b, &dummy)==3)
 			for (; a<=b; a++) set[a]=1;
-		else if (sscanf(buf, "%x;%*[WF]%c", &a, &dummy)==2)
+		else if (sscanf(buf, "%x ; %*[WF]%c", &a, &dummy)==2)
 			set[a] = 1;
 	}
 	fclose(f);
